@@ -1,7 +1,13 @@
 import java.util.List;
+import java.util.Scanner;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
-
+	Scanner entrada=new Scanner(System.in);
+	String tipoAlbum = entrada.nextLine();
+	String codigoID = entrada.nextLine();
+	//Album album = new Album(tipoAlbum, codigoID);
+	Figurita [] figurita;
+	Usuario usuario;
 	@Override
 	public int registrarParticipante(int dni, String nombre, String tipoAlbum) {
 		// TODO Auto-generated method stub

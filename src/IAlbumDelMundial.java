@@ -1,7 +1,11 @@
 import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public interface IAlbumDelMundial {
-
+	Figurita [] figuritasCompra = new Figurita[3]; //4 figuritas por compra
+	Fabrica f = new Fabrica();
 	/**
 	 * Registra un nuevo participante y devuelve el codigo unico del album
 	 * asociado.
@@ -9,6 +13,7 @@ public interface IAlbumDelMundial {
 	 * Si el participante ya está registrado o el tipo de album es invalido, 
 	 * se debe lanzar una excepcion.
 	 */
+	
 	int registrarParticipante(int dni, String nombre, String tipoAlbum);
 
 	/**
@@ -17,8 +22,8 @@ public interface IAlbumDelMundial {
 	 * 
 	 * Si el participante no está registrado, se debe lanzar una excepción.
 	 */
-	void comprarFiguritas(int dni);
-	
+	void comprarFiguritas(int dni) {
+	}
 	/**
 	 * Se generan 4 figuritas top 10 al azar y 
 	 * se asocia al participante correspondiente identificado por dni

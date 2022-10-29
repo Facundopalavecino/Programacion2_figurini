@@ -6,10 +6,9 @@ import java.util.Random;
 
 
 public class Fabrica {
-
-
+	Album album;
+	private Figurita figurita;
 	private Random random;
-
 	private String[] premiosInstantaneos;
 	private String[] paisesParticipantes;
 	private int lugaresPorPais;
@@ -25,6 +24,7 @@ public class Fabrica {
 		balonYPaisPorMundialTop10 = generarPaisesPorMundial();
 		ranking = generarRanking();
 		premiosInstantaneos = generarPremiosParaSorteoInstantaneo();
+	
 	}
 	
 	////////////////////////////////////////////////////////////////////////
@@ -37,14 +37,17 @@ public class Fabrica {
 	////////////////////////////////////////////////////////////////////////
 
 	Album crearAlbumWeb() {
+		
+		//Album albumWeb = new Album ();
         throw new RuntimeException("A Implementar");
 	}
 
 	Album crearAlbumExtendido() {
+	//	a = new Album()
         throw new RuntimeException("A Implementar");
 	}
 
-	Album crearAlbumTradicional() {
+	Album crearAlbumTradicional(Album a) {
 		throw new RuntimeException("A Implementar");
 	}
 
@@ -63,7 +66,7 @@ public class Fabrica {
 	
 	// Dado el pais y numero de jugador de una figurita calcula
 	// cual es su valor base simbobilo.
-	private int calcularValorBase(String pais, int numero) {
+	public int calcularValorBase(String pais, int numero) {
 		return ranking.get(pais) + numero;
 	}
 
@@ -73,7 +76,7 @@ public class Fabrica {
 			};
 	}
 
-	private String[] generarPaisesClasificados() {
+	public String[] generarPaisesClasificados() {
 		return new String[]{ 
 				"Alemania",   "Arabia SaudÃ­",   "Argentina",          "Australia", 
 				"Brasil",     "BÃ©lgica",        "CamerÃºn",            "CanadÃ¡", 
@@ -86,17 +89,17 @@ public class Fabrica {
 			};
 	}
 
-	private String[] generarListadoDeMundiales() {
+	public String[] generarListadoDeMundiales() {
 		return new String[] { 
 				"EspaÃ±a '82",    "MÃ©xico '86", "Italia '90",  "Estados Unidos '94",
 				"Francia '98",   "Corea del Sur y JapÃ³n '02", "Alemania '06", 
 				"SudÃ¡frica '10", "Brasil '14", "Rusia '18" };
 	}
 
-	private Map<String, String[]> generarPaisesPorMundial() {
+	public Map<String, String[]> generarPaisesPorMundial() {
 		Map<String, String[]> ret = new HashMap<>();
 		ret.put("EspaÃ±a '82", new String[] { "Italia", "Brasil" });
-		ret.put("MÃ©xico '86", new String[] { "Argentina", "Alemania" });
+		ret.put("MÃ©xico '86",  	 	new String[] { "Argentina", "Alemania" });
 		ret.put("Italia '90", new String[] { "Italia", "Alemania" });
 		ret.put("Estados Unidos '94", new String[] { "Brasil", "Italia" });
 		ret.put("Francia '98", new String[] { "Brasil", "Croacia" });
@@ -108,7 +111,7 @@ public class Fabrica {
 		return ret;
 	}
 	
-	private Map<String, Integer> generarRanking() {
+	public Map<String, Integer> generarRanking() {
 		Map<String, Integer> ret = new HashMap<>();
 		ret.put("Brasil",1);
 		ret.put("BÃ©lgica",2);
