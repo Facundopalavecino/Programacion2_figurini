@@ -47,7 +47,8 @@ public class Fabrica {
         throw new RuntimeException("A Implementar");
 	}
 
-	Album crearAlbumTradicional(Album a) {
+	Album crearAlbumTradicional() {
+		Album a = new Album(a.getCodigoID(), a.getTipoAlbum(), a.getSorteoInstantaneo());
 		throw new RuntimeException("A Implementar");
 	}
 

@@ -1,11 +1,15 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public interface IAlbumDelMundial {
-	Figurita [] figuritasCompra = new Figurita[3]; //4 figuritas por compra
+	Figurita [] figuritasCompra = new Figurita[3];//4 figuritas por compra
+	FiguritaTop10 [] figuritasTop10 = new FiguritaTop10[3];
 	Fabrica f = new Fabrica();
+	boolean albumTradicionalCompleto = false;
+	boolean albumWebCompleto = false;
 	/**
 	 * Registra un nuevo participante y devuelve el codigo unico del album
 	 * asociado.
@@ -22,7 +26,12 @@ public interface IAlbumDelMundial {
 	 * 
 	 * Si el participante no está registrado, se debe lanzar una excepción.
 	 */
-	void comprarFiguritas(int dni) {
+	default void comprarFiguritas(int dni) {
+		for (int i=0 ; i<figuritasCompra.length;i++) {
+			if(figuritasCompra[i] != null) {
+				figuritasCompra[i].crearFiguritasTradicional();
+			}
+		}
 	}
 	/**
 	 * Se generan 4 figuritas top 10 al azar y 
@@ -31,7 +40,13 @@ public interface IAlbumDelMundial {
 	 * Si el participante no está registrado, se debe lanzar una excepción.
 	 * Si el participante no tiene album top10, se debe lanzar una excepción.
 	 */
-	void comprarFiguritasTop10(int dni);
+	default void comprarFiguritasTop10(int dni) {
+		for(int i=0 ; i < figuritasTop10.length;i++) {
+			if(figuritasTop10[i] != null) {
+				figuritasTop10[i].crearFiguritasTop10();
+			}
+		}
+	}
 
 	/**
 	 * Compra por única vez un grupo de 4 figuritas con el codigo promocional 
@@ -136,4 +151,7 @@ public interface IAlbumDelMundial {
 	 *     "($dni) $nombre: $tipoAlbum"
 	 */
 	 List<String> participantesQueCompletaronElPais(String nombrePais);
+	 
+	// fig = new Figurita (fig.getNumero() , fig.getValorBase(), fig.getNombrePais());
+	 
 }

@@ -1,27 +1,27 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Usuario {
 	private String nombreUsuario;
 	private int dni;
 	private Album tipoAlbum;
-	private Figurita [] figuritasRepetidas;
+	private HashMap <Integer,String> figuritasRepetidas = new HashMap<>();
 	// private ArrayList<Figuritas> figuritas;
-	private Figurita figuritas;
+	private Figurita[] figuritas;
 	//private Conjunto<Figurita> figRepetidas; 
 	
 	public Usuario(int dni,String nombreUsuario,  
 		Album tipoAlbum) {
 		super();
-		this.nombreUsuario = nombreUsuario;
 		this.dni = dni;
+		this.nombreUsuario = nombreUsuario;
 		this.tipoAlbum = tipoAlbum;
 	}
-	void pegarFigurita(int numero) {
-		
-	}
-	void guardarFiguritasRepetidas(Figurita figuritas) {
+	
+	void guardarFiguritasRepetidas(Figurita[] figuritas) {
 		LinkedList figuritasRepetidas = new LinkedList();
-		figuritasRepetidas.add(figuritas);
+		for (int i=0;i<figuritas.length;i++)
+			figuritasRepetidas.add(figuritas);
 	}
 	boolean intercambiar(int numero) {
 		return false;

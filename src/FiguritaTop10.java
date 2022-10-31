@@ -4,8 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class FiguritaTop10 extends Figurita {
 	private Fabrica f = new Fabrica();
 	private String premioTop10;
-	private String sede;
-	private String año;
+	//private String sede;
+	//private String año;
 	
 	public FiguritaTop10(int numero, int valorBase, String nombrePais) {
 		super(numero, valorBase, nombrePais);
@@ -17,10 +17,11 @@ public class FiguritaTop10 extends Figurita {
 	}
 	public void crearFiguritasTop10() {
 		for(int i=0;i<4;i++) {
-			Map<String, String[]> paises = f.generarPaisesPorMundial();
-			int indiceAleatorio = aleatorio(0,paises.size()-1);
-			String pais = paises;
-			
+			Map<String, String[]> paises = f.generarPaisesPorMundial(); //ya genera sede y año
+			int indiceAleatorio = aleatorio(0,paises.size() - 1);
+			String[] pais = paises.get(indiceAleatorio);
+			System.out.println("Pais: "+ pais + "Su valor es:"+
+			valorFigTop10(getNumero()));
 		}
 	}
 	static int aleatorio(int minimo, int maximo) {

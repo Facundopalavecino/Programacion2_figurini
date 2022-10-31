@@ -2,6 +2,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
+	Figurita[] figuritas;
 	Scanner entrada=new Scanner(System.in);
 	String tipoAlbum = entrada.nextLine();
 	String codigoID = entrada.nextLine();

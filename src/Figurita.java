@@ -4,13 +4,12 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Figurita {
-	private Random random;
+	//private Random random;
 	private int numero;
 	private int valorBase;
 	private String nombrePais;
 	private Fabrica f = new Fabrica() ;
 	private String premio;
-	private ArrayList[] grupos; //figuritas de a 4
 	
 //	Figurita(){
 //		valorBase = calcularValorFigurita(numero);
@@ -65,11 +64,13 @@ public abstract class Figurita {
 			String[] paises = f.generarPaisesClasificados();
 			int indiceAleatorio = aleatorio(0,paises.length-1);
 			String pais = paises[indiceAleatorio];
-			System.out.println("Pais: " + pais + "_Su valor es: "+ f.calcularValorBase(pais, numero));
+			System.out.println("Pais: " + pais + "_Su valor es: " + 
+			calcularValorFigurita(this.numero /* o numero ?*/)
+			+ "numero de figurita es: " + (this.numero));
 		}
 		
 	}
 	static int aleatorio(int minimo, int maximo) {
 		return ThreadLocalRandom.current().nextInt(minimo, maximo + 1);
-	}
+	} //metodo Random
 }
