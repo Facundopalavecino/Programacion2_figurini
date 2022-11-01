@@ -1,24 +1,35 @@
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
-	Figurita[] figuritas;
-	Scanner entrada=new Scanner(System.in);
-	String tipoAlbum = entrada.nextLine();
-	String codigoID = entrada.nextLine();
-	//Album album = new Album(tipoAlbum, codigoID);
-	Figurita [] figurita;
-	Usuario usuario;
+	
+	private HashMap<Integer,Usuario>usuario;
+	
+	
+
+	public AlbumDelMundial() {
+		super();
+		usuario = new HashMap<Integer,Usuario>();
+	}
+	
+
 	@Override
 	public int registrarParticipante(int dni, String nombre, String tipoAlbum) {
 		// TODO Auto-generated method stub
+		if(!usuario.containsKey(dni)) {
+			usuario.put(dni,new Usuario(dni,nombre,tipoAlbum));
+			System.out.println("usuariofueingresado" + dni);
+			return dni;
+		}
+				
 		return 0;
 	}
 
 	@Override
 	public void comprarFiguritas(int dni) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -41,6 +52,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public boolean llenoAlbum(int dni) {
+		
 		// TODO Auto-generated method stub
 		return false;
 	}

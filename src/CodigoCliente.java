@@ -28,7 +28,7 @@ public class CodigoCliente {
 				sistema.aplicarSorteoInstantaneo(333333)
 			);
 		System.out.println();
-		
+		/*
 		List<String> pegadas = sistema.pegarFiguritas(222222);
 		
 		if(pegadas.isEmpty()) { //o sea... no pego ninguna
@@ -78,5 +78,6 @@ public class CodigoCliente {
 		System.out.println("=================================================");
 		System.out.println(sistema);
 	}
-
+*/
+	}
 }

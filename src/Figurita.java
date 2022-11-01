@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public abstract class Figurita {
+public class Figurita {
 	//private Random random;
 	private int numero;
 	private int valorBase;
@@ -11,10 +11,6 @@ public abstract class Figurita {
 	private Fabrica f = new Fabrica() ;
 	private String premio;
 	
-//	Figurita(){
-//		valorBase = calcularValorFigurita(numero);
-//		grupos = new ArrayList[3];// para comprar de a 4
-//	}
 	
 	public Figurita(int numero, int valorBase, String nombrePais) {
 		super();
