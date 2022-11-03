@@ -6,7 +6,6 @@ import java.util.Random;
 
 
 public class Fabrica {
-	Album album;
 	private Figurita figurita;
 	private Random random;
 	private String[] premiosInstantaneos;
@@ -35,26 +34,36 @@ public class Fabrica {
 	//       y el metodo "calcularValorBase" para saber que valor base    //
 	//       tendrÃ¡ una figurita en particula.                            //
 	////////////////////////////////////////////////////////////////////////
-
+	/*
 	Album crearAlbumWeb() {
 		
-		//Album albumWeb = new Album ();
+		Album albumWeb = new AlbumWeb (23);
         throw new RuntimeException("A Implementar");
 	}
 
 	Album crearAlbumExtendido() {
-	//	a = new Album()
+		Album a = new AlbumExtendido(23);
         throw new RuntimeException("A Implementar");
 	}
 
 	Album crearAlbumTradicional() {
-		Album a = new Album(a.getCodigoID(), a.getTipoAlbum(), a.getSorteoInstantaneo());
+		Album a = new AlbumTradicional(23);
 		throw new RuntimeException("A Implementar");
 	}
-
-	List<Figurita> generarSobre(int cantFigus) {
-		throw new RuntimeException("A Implementar");
+*/
+	List<Figurita> generarSobre() {
+		ArrayList<Figurita> sobre = new ArrayList<Figurita>();
+		
+		for(int i=(int) Math.random();i<=paisesParticipantes.length;i++) {
+			String pais =paisesParticipantes[(int) Math.random()];
+			generarRanking().get(pais);
+		    int numJug =0;
+			sobre.add(new Figurita(calcularValorBase(pais,numJug),calcularValorBase(pais,numJug),pais,numJug));
+		}
+		return null;
 	}		
+
+	
 
 	List<Figurita> generarSobreTop10(int cantFigus) {
 		throw new RuntimeException("A Implementar");
@@ -68,7 +77,7 @@ public class Fabrica {
 	// Dado el pais y numero de jugador de una figurita calcula
 	// cual es su valor base simbobilo.
 	public int calcularValorBase(String pais, int numero) {
-		return ranking.get(pais) + numero;
+		return generarRanking().get(pais)*12+numero;   // el multiplicar x 12 asegura que el numero sea unico;
 	}
 
 	private String[] generarPremiosParaSorteoInstantaneo() {

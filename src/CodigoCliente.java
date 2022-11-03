@@ -13,6 +13,7 @@ public class CodigoCliente {
 		sistema.registrarParticipante(666666, "Jazzmine", "Extendido");
 		sistema.registrarParticipante(777777, "Dante", "Tradicional");
 		
+		
 		sistema.comprarFiguritas(222222);
 		// El participante 111111 tiene album Web entonces tiene un codigo 
 		// promocional para solicitar 4 figuritas sin consto.
@@ -28,7 +29,7 @@ public class CodigoCliente {
 				sistema.aplicarSorteoInstantaneo(333333)
 			);
 		System.out.println();
-		/*
+		
 		List<String> pegadas = sistema.pegarFiguritas(222222);
 		
 		if(pegadas.isEmpty()) { //o sea... no pego ninguna
@@ -78,6 +79,6 @@ public class CodigoCliente {
 		System.out.println("=================================================");
 		System.out.println(sistema);
 	}
-*/
-	}
+
+	
 }

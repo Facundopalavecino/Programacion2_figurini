@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Album {
-	private int codigoID;
+	protected int codigoID;
 	private String premio;
 	private int sorteoInstantaneo;
 	private boolean estaCompleto;
-	HashMap<Integer,Figurita> pegadas;
+	protected HashMap<Integer,Figurita> pegadas;
 	
 	
 	public Album() {
@@ -14,7 +14,15 @@ public abstract class Album {
 		pegadas = new HashMap<Integer,Figurita>();
 	}
 	
-	
+	public HashMap<Integer, Figurita> getPegadas() {
+		return pegadas;
+	}
+
+
+	public void setPegadas(HashMap<Integer, Figurita> pegadas) {
+		this.pegadas = pegadas;
+	}
+
 
 	
 }

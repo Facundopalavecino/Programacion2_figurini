@@ -26,13 +26,7 @@ public interface IAlbumDelMundial {
 	 * 
 	 * Si el participante no está registrado, se debe lanzar una excepción.
 	 */
-	default void comprarFiguritas(int dni) {
-		for (int i=0 ; i<figuritasCompra.length;i++) {
-			if(figuritasCompra[i] != null) {
-				figuritasCompra[i].crearFiguritasTradicional();
-			}
-		}
-	}
+	 void comprarFiguritas(int dni);
 	/**
 	 * Se generan 4 figuritas top 10 al azar y 
 	 * se asocia al participante correspondiente identificado por dni
@@ -40,13 +34,7 @@ public interface IAlbumDelMundial {
 	 * Si el participante no está registrado, se debe lanzar una excepción.
 	 * Si el participante no tiene album top10, se debe lanzar una excepción.
 	 */
-	default void comprarFiguritasTop10(int dni) {
-		for(int i=0 ; i < figuritasTop10.length;i++) {
-			if(figuritasTop10[i] != null) {
-				figuritasTop10[i].crearFiguritasTop10();
-			}
-		}
-	}
+	void comprarFiguritasTop10(int dni) ;
 
 	/**
 	 * Compra por única vez un grupo de 4 figuritas con el codigo promocional 

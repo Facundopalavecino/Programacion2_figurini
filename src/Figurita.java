@@ -5,28 +5,30 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Figurita {
 	//private Random random;
-	private int numero;
+	private int numeroID;
 	private int valorBase;
 	private String nombrePais;
-	private Fabrica f = new Fabrica() ;
+	private int numeroJugador; // 0 al 12
 	private String premio;
 	
-	
-	public Figurita(int numero, int valorBase, String nombrePais) {
-		super();
-		this.numero = numero;
+
+
+	public Figurita(int numeroID, int valorBase, String pais, int numJug) {
+		// TODO Auto-generated constructor stub
+		this.numeroID = numeroID;
 		this.valorBase = valorBase;
-		this.nombrePais = nombrePais;
-	}
-	
-	
-	public int getNumero() {
-		return numero;
+		this.nombrePais = pais;
+		this.numeroJugador=numJug;
 	}
 
+	
 
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public int getNumeroID() {
+		return numeroID;
+	}
+
+	public void setNumeroID(int numero) {
+		this.numeroID = numero;
 	}
 
 
@@ -51,22 +53,15 @@ public class Figurita {
 
 
 	double calcularValorFigurita(int numero) {
-		//Fabrica fabrica = new Fabrica();
-		return f.calcularValorBase(nombrePais, numero);
-	}
-	
-	public void crearFiguritasTradicional () {
-		for(int i=0;i<4;i++) {	
-			String[] paises = f.generarPaisesClasificados();
-			int indiceAleatorio = aleatorio(0,paises.length-1);
-			String pais = paises[indiceAleatorio];
-			System.out.println("Pais: " + pais + "_Su valor es: " + 
-			calcularValorFigurita(this.numero /* o numero ?*/)
-			+ "numero de figurita es: " + (this.numero));
-		}
+		return 0.0;
 		
 	}
+	
 	static int aleatorio(int minimo, int maximo) {
 		return ThreadLocalRandom.current().nextInt(minimo, maximo + 1);
-	} //metodo Random
+	} 
+
+
+
+	
 }

@@ -1,14 +1,15 @@
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class AlbumDelMundial implements IAlbumDelMundial {
 	
 	private HashMap<Integer,Usuario>usuario;
+	private Fabrica f;
 	
 	
 
-	public AlbumDelMundial() {
+	public AlbumDelMundial() { //constructor// 
 		super();
 		usuario = new HashMap<Integer,Usuario>();
 	}
@@ -22,16 +23,27 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			System.out.println("usuariofueingresado" + dni);
 			return dni;
 		}
-				
-		return 0;
+		else{
+			throw new RuntimeException("este usuario ya esta registrado");
+		}		
+		
 	}
 
 	@Override
 	public void comprarFiguritas(int dni) {
 		// TODO Auto-generated method stub
+		if(usuario.containsKey(dni)) {  // pregunta si el usuario existe 
+			for(Figurita f : f.generarSobre()) { // recorre las figuritas que crea el sobre
+				usuario.get(dni).agregarFig(f);// 
+			}
+			
+		}else {
+			throw new RuntimeException("este usuario no esta registrado");
+		}
 		
 	}
-
+	
+	
 	@Override
 	public void comprarFiguritasTop10(int dni) {
 		// TODO Auto-generated method stub
@@ -41,6 +53,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override
 	public void comprarFiguritasConCodigoPromocional(int dni) {
 		// TODO Auto-generated method stub
+		if(usuario.get(dni).getAlbum().getClass() != null) {}
 
 	}
 
