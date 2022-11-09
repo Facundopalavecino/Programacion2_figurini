@@ -9,7 +9,6 @@ public class Figurita {
 	private int valorBase;
 	private String nombrePais;
 	private int numeroJugador; // 0 al 12
-	private String premio;
 	
 
 
@@ -59,6 +58,18 @@ public class Figurita {
 	
 	static int aleatorio(int minimo, int maximo) {
 		return ThreadLocalRandom.current().nextInt(minimo, maximo + 1);
+	}
+
+
+
+	public int getNumeroJugador() {
+		return numeroJugador;
+	}
+
+
+
+	public void setNumeroJugador(int numeroJugador) {
+		this.numeroJugador = numeroJugador;
 	} 
 
 

@@ -7,7 +7,7 @@ public class Usuario {
 	private int dni;
 	private Album album;
 	private HashMap <Integer,Figurita> figuritasRepetidas;
-	private ArrayList<Figurita>figDeJug;
+	private ArrayList <Figurita> figuritasDelJug;
 	
 	
 	public Usuario(int dni,String nombreUsuario,String tipoAlbum) {
@@ -15,44 +15,42 @@ public class Usuario {
 		this.dni = dni;
 		this.nombreUsuario = nombreUsuario;
 		figuritasRepetidas = new HashMap<Integer,Figurita>();
+		figuritasDelJug = new ArrayList<Figurita>();
 		crearAlbum(tipoAlbum);
 		
 	}
 	
 	private void crearAlbum(String tipoAlbum2) {
 		// TODO Auto-generated method stub
+		try {
 		if(tipoAlbum2 == "Tradicional") {
-			album  = new AlbumTradicional(dni+20);
+			album  = new AlbumTradicional(dni+20,dni);// para darle un codigounico al album le sumo 20 al dni
+			}
+			else if (tipoAlbum2 == "Web") {
+			album = new AlbumWeb(dni+20,dni,dni); //paso el dni como codPromocional y para el sorteo
+			} 
+			else if (tipoAlbum2 == "Extendido") {
+			album  = new AlbumExtendido(dni+20,dni);
+			}
+		}catch(RuntimeException ex) {
+			System.out.println("el tipo de album no existe" + dni);
 		}
-		else if (tipoAlbum2 == "Web") {
-			album  = new AlbumWeb(20+dni);
-		} 
-		else if (tipoAlbum2 == "Extendido") {
-			album  = new AlbumExtendido(dni+20);
-		}else {
-			 throw new RuntimeException("este tipo de album no existe"); 
-		}
-		
+			
 	}
 
-	private void guardarFiguritasRepetidas(Figurita fig) {
+	public void guardarFiguritasRepetidas(Figurita fig) {
 		figuritasRepetidas.put(fig.getNumeroID(), fig);
 	}
 	
-	/*pregunta si la figura ya esta pegada en el album sino esta la pega, si ya esta la guarda en figuritas
-	repetidas*/
-	public boolean agregarFig(Figurita f){   
-		if(!album.getPegadas().containsKey(f.getNumeroID())) {
-			album.getPegadas().put(f.getNumeroID(),f);
-		}
-		else {
-			guardarFiguritasRepetidas(f);
-		}
-		
-		return false;
-		
+	
+	public void agregarFig(Figurita f){   
+		figuritasDelJug.add(f);
 	}
 	
+	public ArrayList<Figurita> getFiguritasDelJug() {
+		return figuritasDelJug;
+	}
+
 	boolean intercambiar(int numero) {
 		return false;
 	}

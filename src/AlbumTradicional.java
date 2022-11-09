@@ -4,15 +4,18 @@ import java.util.HashMap;
 public class AlbumTradicional extends Album{
 
 
-	public AlbumTradicional(int i) {
-		// TODO Auto-generated constructor stub
-		super();
-		codigoID=i;
-		pegadas = new HashMap<Integer,Figurita>();
+	public AlbumTradicional(int CodId,int ParaSorteo){
+		super(CodId,ParaSorteo);
+		this.premio="pelota";
+		this.estaCompleto=false;
+		this.pegadas=new HashMap<Integer,Figurita>();
 	}
 
 	
-		
+	@Override
+	public HashMap<Integer, Figurita> getPegadas() {
+		return pegadas;
+	}
       
 
 

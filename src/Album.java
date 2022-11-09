@@ -3,25 +3,27 @@ import java.util.HashMap;
 
 public abstract class Album {
 	protected int codigoID;
-	private String premio;
-	private int sorteoInstantaneo;
-	private boolean estaCompleto;
+	protected String premio;
+	protected int sorteoInstantaneo;
+	protected boolean estaCompleto;
 	protected HashMap<Integer,Figurita> pegadas;
 	
 	
-	public Album() {
+	
+	
+	public Album(int codigoID, int sorteoInstantaneo) {
 		super();
+		this.codigoID = codigoID;
+		this.sorteoInstantaneo = sorteoInstantaneo;
+		this.estaCompleto=false;
 		pegadas = new HashMap<Integer,Figurita>();
 	}
+
+
+	protected abstract HashMap<Integer, Figurita> getPegadas();
+
+
 	
-	public HashMap<Integer, Figurita> getPegadas() {
-		return pegadas;
-	}
-
-
-	public void setPegadas(HashMap<Integer, Figurita> pegadas) {
-		this.pegadas = pegadas;
-	}
 
 
 	
