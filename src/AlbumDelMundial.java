@@ -28,10 +28,10 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			}
 		}
 		catch(RuntimeException ex){
-			System.out.println("el usuario ya fue ingresado");
+			
+			throw new RuntimeException("no anda porque es puto");
 		}
-		return dni;
-		
+		return 0;
 	}
 
 
@@ -46,7 +46,6 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 					}
 				}
 			}catch(RuntimeException ex){
-				throw new RuntimeException("el usuario no existe");
 			}
 		
 		
@@ -67,8 +66,9 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if(usuario.containsKey(dni)) {   /// pregunta si contiene la clave dni
 			if(usuario.get(dni).getAlbum() instanceof AlbumWeb){	// pregunta si es de tipo album web
 				AlbumWeb album = (AlbumWeb)usuario.get(dni).getAlbum(); // castea
-				if(!album.isCodUsado()) { // if el codigo no fue utilizado agrega las figuritas 
-					for(Figurita fig : f.generarSobre()){ // genera el sobre y lo recorre
+				if(!album.isCodUsado()) { // if el codigo no fue utilizado agrega las figuritas
+					List<Figurita> sobre = f.generarSobre();
+					for(Figurita fig : sobre){ // genera el sobre y lo recorre
 						usuario.get(dni).agregarFig(fig); // agrega fig
 						}
 					album.setCodUsado(true);
@@ -96,9 +96,9 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public boolean llenoAlbum(int dni) {
-		
-		// TODO Auto-generated method stub
-		return false;
+		if(EstaRegistrado(dni)) {
+			return usuario.get(dni).completoAlbum();
+		}return false; // lanzar excepcion
 	}
 
 	@Override
@@ -110,6 +110,13 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override
 	public int buscarFiguritaRepetida(int dni) {
 		// TODO Auto-generated method stub
+		if(EstaRegistrado(dni)) {
+			if(!usuario.get(dni).getRepetidas().isEmpty()){
+				for(int i:usuario.get(dni).getRepetidas().keySet()) {
+					return usuario.get(dni).getRepetidas().get(i);
+				}
+			}
+		}
 		return 0;
 	}
 

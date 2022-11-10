@@ -27,5 +27,12 @@ public class AlbumExtendido extends Album {
 		return pegadas;
 	}
 	
+	public boolean completo() { // recorro las figuritas que tiene pegadas si es igual a 12x32 es que lo completo
+		int cont=0;
+		for(int i : pegadas.keySet()){
+		}
+		return cont==12*32;
+	}
+	
 
 }

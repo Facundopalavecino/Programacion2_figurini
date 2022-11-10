@@ -14,8 +14,8 @@ public class Usuario {
 		super();
 		this.dni = dni;
 		this.nombreUsuario = nombreUsuario;
-		figuritasRepetidas = new HashMap<Integer,Figurita>();
-		figuritasDelJug = new ArrayList<Figurita>();
+		this.figuritasRepetidas = new HashMap<Integer,Figurita>();
+		this.figuritasDelJug = new ArrayList<Figurita>();
 		crearAlbum(tipoAlbum);
 		
 	}
@@ -57,7 +57,11 @@ public class Usuario {
 	
 	
 	boolean completoAlbum() {
-		return false;
+		int cont=0;
+		for(int i :album.pegadas.keySet()) {
+			cont++;
+		}
+		return cont==12*32;
 	}
 	
 	public Album getAlbum() {
@@ -68,5 +72,7 @@ public class Usuario {
 		this.album = album;
 	}
 	
-	
+	public HashMap<Integer, Figurita> getRepetidas() {
+		return figuritasRepetidas;
+	}
 }
