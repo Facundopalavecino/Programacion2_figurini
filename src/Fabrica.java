@@ -54,7 +54,12 @@ public class Fabrica {
 		  return (int) (Math.random() * (max - min) + min);
 		}
 
-	List<Figurita> generarSobreTop10(int cantFigus) {
+	List<Figurita> generarSobreTop10() {
+		/*
+		int i = 0;
+		while(i<4) {
+			listadoDeMundialesTop10
+		}*/
 		throw new RuntimeException("A Implementar");
 	}
 
@@ -66,11 +71,11 @@ public class Fabrica {
 	// Dado el pais y numero de jugador de una figurita calcula
 	// cual es su valor base simbobilo.
 	public int generarNumID(String pais, int numero) {
-		return generarRanking().get(pais)*12+numero;   // el multiplicar x 12 asegura que el numero sea unico;
+		return ranking.get(pais)*12+numero;   // el multiplicar x 12 asegura que el numero sea unico;
 	}
 	
 	public int generarValorBase(String pais, int numero) {
-		if(generarRanking().get(pais).intValue()<10){
+		if(ranking.get(pais).intValue()<10){
 			return 100+numero;
 		}
 		else{

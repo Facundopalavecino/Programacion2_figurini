@@ -26,12 +26,22 @@ public class AlbumExtendido extends Album {
 	public HashMap<Integer, Figurita> getPegadas() {
 		return pegadas;
 	}
-	
-	public boolean completo() { // recorro las figuritas que tiene pegadas si es igual a 12x32 es que lo completo
+
+
+	@Override
+	public boolean DevolverCompletoPais(String nombrePais) {
+		// TODO Auto-generated method stub
 		int cont=0;
-		for(int i : pegadas.keySet()){
-		}
-		return cont==12*32;
+		for(Figurita f :pegadas.values()) {
+			if(f.getNombrePais()== nombrePais) {
+				cont++;
+			}
+		}return cont == 12;
+	}
+	
+	protected boolean estaCompleto() {
+		// TODO Auto-generated method stub
+		return super.estaCompleto();
 	}
 	
 

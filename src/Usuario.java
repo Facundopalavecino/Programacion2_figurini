@@ -75,4 +75,8 @@ public class Usuario {
 	public HashMap<Integer, Figurita> getRepetidas() {
 		return figuritasRepetidas;
 	}
+	
+	public String getNombre() {
+		return nombreUsuario;
+	}
 }

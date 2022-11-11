@@ -8,6 +8,7 @@ public class CodigoCliente {
 		
 		sistema.registrarParticipante(222222, "Christian", "Tradicional");
 		sistema.registrarParticipante(333333, "Mariana", "Extendido");
+		sistema.registrarParticipante(333333, "Mariana", "Extendido");
 		sistema.registrarParticipante(111111, "José", "Web");
 		sistema.registrarParticipante(555555, "Miguel", "Web");
 		sistema.registrarParticipante(666666, "Jazzmine", "Extendido");

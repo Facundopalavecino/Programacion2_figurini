@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Album {
@@ -21,6 +20,17 @@ public abstract class Album {
 
 
 	protected abstract HashMap<Integer, Figurita> getPegadas();
+
+	protected abstract boolean DevolverCompletoPais(String pais);
+
+
+	protected boolean estaCompleto() {
+			int figTotal=0;
+			for(int i : pegadas.keySet()) {
+				figTotal++;
+				}
+			return figTotal==284;
+	}
 
 
 	

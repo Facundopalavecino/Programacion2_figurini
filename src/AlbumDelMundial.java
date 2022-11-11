@@ -8,7 +8,7 @@ import java.util.Set;
 public class AlbumDelMundial implements IAlbumDelMundial {
 	
 	private HashMap<Integer,Usuario>usuario;
-	private Fabrica f;
+	private Fabrica f = new  Fabrica();
 	
 
 	public AlbumDelMundial() { //constructor// 
@@ -19,41 +19,31 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	
 	@Override
 	public int registrarParticipante(int dni, String nombre, String tipoAlbum) {
-		// TODO Auto-generated method stub
-		try {
 		if(!EstaRegistrado(dni) && tipoAlbum(tipoAlbum)) {
 			usuario.put(dni,new Usuario(dni,nombre,tipoAlbum));
 			return dni;
-		
 			}
-		}
-		catch(RuntimeException ex){
-			
-			throw new RuntimeException("no anda porque es puto");
-		}
-		return 0;
+		new RuntimeException("el usuario ya esta Registrado");
+		return -1;
 	}
 
 
 	@Override
 	public void comprarFiguritas(int dni) {
 		// TODO Auto-generated method stub
-		try {
-			if(usuario.containsKey(dni)) {// pregunta si el usuario existe 
-				List<Figurita> sobre =f.generarSobre();// si existe genera un sobre
-				for(Figurita fig : sobre) { // recorre las figuritas que crea el sobre
-					usuario.get(dni).agregarFig(fig);// 
-					}
+		try {	
+		if(EstaRegistrado(dni)) {
+				List<Figurita> sobre = f.generarSobre();
+				for(Figurita fig : sobre) {
+				usuario.get(dni).agregarFig(fig);
 				}
-			}catch(RuntimeException ex){
 			}
-		
-		
+		}catch(RuntimeException ex){
+			
+			new RuntimeException("el participante no esta Registrado"); 
+		}
 	}
 	
-
-
-
 	@Override
 	public void comprarFiguritasTop10(int dni) {
 		if(usuario.containsKey(dni)) {
@@ -63,7 +53,8 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override
 	public void comprarFiguritasConCodigoPromocional(int dni) {
 		// TODO Auto-generated method stub
-		if(usuario.containsKey(dni)) {   /// pregunta si contiene la clave dni
+		
+		if(EstaRegistrado(dni)) {   /// pregunta si contiene la clave dni
 			if(usuario.get(dni).getAlbum() instanceof AlbumWeb){	// pregunta si es de tipo album web
 				AlbumWeb album = (AlbumWeb)usuario.get(dni).getAlbum(); // castea
 				if(!album.isCodUsado()) { // if el codigo no fue utilizado agrega las figuritas
@@ -73,33 +64,38 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 						}
 					album.setCodUsado(true);
 					}
-				throw new RuntimeException("el codigo promocional ya fue utilizado");
+				new RuntimeException("el codigo promocional ya fue utilizado");
 				}
-			throw new RuntimeException("el album de este usuario no es de tipo AlbumWeb");
+			new RuntimeException("el album de este usuario no es de tipo AlbumWeb");
 			}
-		throw new RuntimeException("no esta registrado");
+		new RuntimeException("no esta registrado");
 		}
 
 	@Override
 	public List<String> pegarFiguritas(int dni) {
+		List<String> listaFig = new ArrayList<String>();
 		if(usuario.containsKey(dni)) {
 		   for(Figurita i :usuario.get(dni).getFiguritasDelJug()) {
 			   if(!usuario.get(dni).getAlbum().getPegadas().containsKey(i.getNumeroID())) {
 				   usuario.get(dni).getAlbum().pegadas.put(i.getNumeroID(),new Figurita(i.getNumeroID(), i.getValorBase(), i.getNombrePais(), i.getNumeroJugador()));
-			   }else {
-				   usuario.get(dni).guardarFiguritasRepetidas(i);
+				   listaFig.add(i.getNumeroID() + i.getNombrePais());
 			   }
-		   }
+				   usuario.get(dni).guardarFiguritasRepetidas(i);
+		   }return listaFig; 
 		}
-		throw new RuntimeException("no esta registrado");
+		new RuntimeException("no esta registrado");
+		return null;
 	}
 
 	@Override
 	public boolean llenoAlbum(int dni) {
 		if(EstaRegistrado(dni)) {
-			return usuario.get(dni).completoAlbum();
+			return usuario.get(dni).getAlbum().estaCompleto();
 		}return false; // lanzar excepcion
 	}
+
+
+
 
 	@Override
 	public String aplicarSorteoInstantaneo(int dni) {
@@ -111,10 +107,11 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	public int buscarFiguritaRepetida(int dni) {
 		// TODO Auto-generated method stub
 		if(EstaRegistrado(dni)) {
-			if(!usuario.get(dni).getRepetidas().isEmpty()){
-				for(int i:usuario.get(dni).getRepetidas().keySet()) {
-					return usuario.get(dni).getRepetidas().get(i);
-				}
+			if(usuario.get(dni).getRepetidas().isEmpty()){
+				return -1;
+			}
+			for(int i :usuario.get(dni).getRepetidas().keySet()) {
+				return i;
 			}
 		}
 		return 0;
@@ -134,14 +131,16 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public String darNombre(int dni) {
-		// TODO Auto-generated method stub
-		return null;
+		if(EstaRegistrado(dni)) {
+			return usuario.get(dni).getNombre();
+		}
+		return null;//// excepcion////
 	}
 
 	@Override
 	public String darPremio(int dni) {
-		// TODO Auto-generated method stub
 		return null;
+		
 	}
 
 	@Override
@@ -152,8 +151,13 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public List<String> participantesQueCompletaronElPais(String nombrePais) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> lista = new ArrayList<String>();
+		for (int u:usuario.keySet()) {
+			if(usuario.get(u).getAlbum().DevolverCompletoPais(nombrePais)) {
+			lista.add(usuario.get(u).getNombre());
+			}
+		}
+		return lista;
 	}
 	
 	
@@ -174,5 +178,11 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	private boolean EstaRegistrado(int dni) {
 		// TODO Auto-generated method stub
 		return usuario.containsKey(dni);	
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Album Del Mundial";
 	}
 }
