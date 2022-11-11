@@ -67,6 +67,7 @@ public class CodigoCliente {
 		}
 		
 		
+		
 		System.out.println("Llenaron album:");
 		System.out.println(sistema.listadoDeGanadores());
 		System.out.println();

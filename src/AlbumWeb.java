@@ -52,4 +52,9 @@ public class AlbumWeb extends Album {
 		// TODO Auto-generated method stub
 		return super.estaCompleto();
 	}
+	
+	
+	public String getPremio(){
+		return this.premio;
+	}
 }

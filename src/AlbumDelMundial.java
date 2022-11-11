@@ -97,7 +97,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 
 
-	@Override
+	@Override/// falta
 	public String aplicarSorteoInstantaneo(int dni) {
 		// TODO Auto-generated method stub
 		return null;
@@ -133,20 +133,32 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	public String darNombre(int dni) {
 		if(EstaRegistrado(dni)) {
 			return usuario.get(dni).getNombre();
-		}
-		return null;//// excepcion////
+		}else {
+			new RuntimeException("el dni no esta registrado");
+			}
+		return "";
 	}
 
 	@Override
 	public String darPremio(int dni) {
+		if(EstaRegistrado(dni)) {
+			if(usuario.get(dni).getAlbum().estaCompleto()) {
+				return usuario.get(dni).getAlbum().getPremio();
+			}new RuntimeException("no tiene completo el album");
+		} new RuntimeException("no esta registrado");
+		
 		return null;
 		
 	}
 
 	@Override
 	public String listadoDeGanadores() {
-		// TODO Auto-generated method stub
-		return null;
+		String cadena = new String ();
+		for(int i:usuario.keySet()) {
+			if(llenoAlbum(i)) {
+				cadena= "nombre" + cadena + usuario.get(i).getNombre()+ " " + "premio" + usuario.get(i).getAlbum().premio + " "; 
+			}
+		}return cadena;
 	}
 
 	@Override

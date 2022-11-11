@@ -9,7 +9,7 @@ public class AlbumExtendido extends Album {
 		super(codID,CodSorteo);
 		this.pegadas = new HashMap<Integer,Figurita>();
 		this.top10= new HashMap<Integer,FiguritaTop10>();
-		this.premio="pelota Y viaje";
+		this.premio= "pelota Y viaje";
 	}
 
 
@@ -25,6 +25,10 @@ public class AlbumExtendido extends Album {
 	@Override
 	public HashMap<Integer, Figurita> getPegadas() {
 		return pegadas;
+	}
+	
+	public String getPremio(){
+		return this.premio;
 	}
 
 

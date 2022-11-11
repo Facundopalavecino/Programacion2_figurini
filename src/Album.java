@@ -31,6 +31,8 @@ public abstract class Album {
 				}
 			return figTotal==284;
 	}
+	
+	protected abstract String getPremio();
 
 
 	

@@ -36,6 +36,9 @@ public class AlbumTradicional extends Album{
 		return super.estaCompleto();
 	}
 
+	public String getPremio(){
+		return this.premio;
+	}
 
 	
 	
