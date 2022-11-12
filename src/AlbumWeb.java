@@ -5,8 +5,8 @@ public class AlbumWeb extends Album {
 	private int codigoPromocional;
 	private boolean codUsado;
 
-	public AlbumWeb(int CodId, int DniParaSorteo,int CodPromocional) {
-		super(CodId, DniParaSorteo);
+	public AlbumWeb(int CodId,int CodPromocional) {
+		super(CodId);
 		this.codigoPromocional=CodPromocional;
 		this.premio="camiseta";
 		this.pegadas=new HashMap<Integer,Figurita>();

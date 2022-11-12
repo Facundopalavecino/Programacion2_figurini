@@ -97,12 +97,24 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 
 
-	@Override/// falta
+	@Override/// 
 	public String aplicarSorteoInstantaneo(int dni) {
 		// TODO Auto-generated method stub
-		return null;
+		if (EstaRegistrado(dni)){
+			if(usuario.get(dni).getAlbum() instanceof AlbumTradicional) {
+				AlbumTradicional album = (AlbumTradicional)usuario.get(dni).getAlbum();
+				if(album.isUsoCodigo()==true) {
+					String premio = f.generarPremiosParaSorteoInstantaneo()[Fabrica.random(0, 2)];
+					return premio;
+				}
+			}
+		}
+		new RuntimeException("No esta registrado");
+		return " ";
+		
+		
 	}
-
+	
 	@Override
 	public int buscarFiguritaRepetida(int dni) {
 		// TODO Auto-generated method stub
@@ -120,7 +132,10 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override
 	public boolean intercambiar(int dni, int codFigurita) {
 		// TODO Auto-generated method stub
-		if(EstaRegistrado(dni))
+		for(Figurita fig : usuario.get(dni).getFiguritasDelJug()){
+			
+		}
+		return true;
 	}
 
 	@Override
@@ -131,19 +146,19 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 					for(Figurita fig : usuario.get(dni).getRepetidas().values()){ //recorremos las figuritas del usuario
 						for(int dni2 : usuario.keySet()) { //vemos si hay otro usuario con mismo tipo de album
 							if(compararAlbunes(dni,dni2)){ //comparo 
-									for(Figurita figurita : usuario.get(dni).getRepetidas().values()) {
-										if(figurita.getValorBase() == fig.getValorBase()) {
-											if(!usuario.get(dni).getAlbum().getPegadas().containsKey(figurita.getNumeroID())){
+									for(Figurita figurita : usuario.get(dni).getRepetidas().values()) { //recorrimos las figuritas por valor, solo las repetidas
+										if(figurita.getValorBase() == fig.getValorBase()) { // si tienen mismo valor base
+											if(!usuario.get(dni).getAlbum().getPegadas().containsKey(figurita.getNumeroID())){ //si no la tiene pegada, intercambia
 												usuario.get(dni).getAlbum().pegadas.put(figurita.getNumeroID(), figurita);
 												usuario.get(dni2).getAlbum().pegadas.put(fig.getNumeroID(), fig);
 												return true;
 											}
-										}new RuntimeException ("No encontro con el mismo valor base");
+										}
 									}
-							}new RuntimeException ("No encontro con el mismo album");
+							}
 						}
 					}	
-				} new RuntimeException ("No tiene repetidos");
+				} 
 		}
 		new RuntimeException ("No esta registrado");
 		return false;

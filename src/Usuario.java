@@ -24,13 +24,13 @@ public class Usuario {
 		// TODO Auto-generated method stub
 		try {
 		if(tipoAlbum2 == "Tradicional") {
-			album  = new AlbumTradicional(dni+20,dni);// para darle un codigounico al album le sumo 20 al dni
+			album  = new AlbumTradicional(dni+20, dni);// para darle un codigounico al album le sumo 20 al dni
 			}
 			else if (tipoAlbum2 == "Web") {
-			album = new AlbumWeb(dni+20,dni,dni); //paso el dni como codPromocional y para el sorteo
+			album = new AlbumWeb(dni+20,dni); //paso el dni como codPromocional y para el sorteo
 			} 
 			else if (tipoAlbum2 == "Extendido") {
-			album  = new AlbumExtendido(dni+20,dni);
+			album  = new AlbumExtendido(dni+20);
 			}
 		}catch(RuntimeException ex) {
 			System.out.println("el tipo de album no existe" + dni);

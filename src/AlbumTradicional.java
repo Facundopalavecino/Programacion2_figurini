@@ -2,16 +2,41 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AlbumTradicional extends Album{
-
+	private int codigoSorteo;
+	private boolean usoCodigo;
 
 	public AlbumTradicional(int CodId,int ParaSorteo){
-		super(CodId,ParaSorteo);
-		this.premio="pelota";
+		super(CodId);
+		this.codigoSorteo = ParaSorteo;
+		this.usoCodigo = false;
 		this.estaCompleto=false;
 		this.pegadas=new HashMap<Integer,Figurita>();
 	}
 
 	
+	
+	public boolean isUsoCodigo() {
+		return usoCodigo;
+	}
+
+
+
+	public void setUsoCodigo(boolean usoCodigo) {
+		this.usoCodigo = usoCodigo;
+	}
+
+
+
+	public int getCodigoSorteo() {
+		return codigoSorteo;
+	}
+
+
+	public void setCodigoSorteo(int codigoSorteo) {
+		this.codigoSorteo = codigoSorteo;
+	}
+
+
 	@Override
 	public HashMap<Integer, Figurita> getPegadas() {
 		return pegadas;

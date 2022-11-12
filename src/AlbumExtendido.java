@@ -4,9 +4,9 @@ public class AlbumExtendido extends Album {
 	HashMap<Integer,FiguritaTop10> top10;
 
 
-	public AlbumExtendido(int codID, int CodSorteo) {
+	public AlbumExtendido(int codID) {
 		// TODO Auto-generated constructor stub
-		super(codID,CodSorteo);
+		super(codID);
 		this.pegadas = new HashMap<Integer,Figurita>();
 		this.top10= new HashMap<Integer,FiguritaTop10>();
 		this.premio= "pelota Y viaje";

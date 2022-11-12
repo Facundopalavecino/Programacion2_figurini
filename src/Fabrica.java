@@ -6,7 +6,6 @@ import java.util.Random;
 
 
 public class Fabrica {
-	private Figurita figurita;
 	private Random random;
 	private String[] premiosInstantaneos;
 	private String[] paisesParticipantes;
@@ -50,7 +49,7 @@ public class Fabrica {
 	}		
 
 	
-	private static int random(int min,int max) {
+	public static int random(int min,int max) {
 		  return (int) (Math.random() * (max - min) + min);
 		}
 
@@ -83,7 +82,7 @@ public class Fabrica {
 		}   
 	}
 
-	private String[] generarPremiosParaSorteoInstantaneo() {
+	public String[] generarPremiosParaSorteoInstantaneo() {
 		return new String[]{
 				"Una pelota","1 Sobre Gratis", "Una camiseta"
 			};

@@ -3,17 +3,15 @@ import java.util.HashMap;
 public abstract class Album {
 	protected int codigoID;
 	protected String premio;
-	protected int sorteoInstantaneo;
 	protected boolean estaCompleto;
 	protected HashMap<Integer,Figurita> pegadas;
 	
 	
 	
 	
-	public Album(int codigoID, int sorteoInstantaneo) {
+	public Album(int codigoID) {
 		super();
 		this.codigoID = codigoID;
-		this.sorteoInstantaneo = sorteoInstantaneo;
 		this.estaCompleto=false;
 		pegadas = new HashMap<Integer,Figurita>();
 	}
