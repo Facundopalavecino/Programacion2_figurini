@@ -120,13 +120,53 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override
 	public boolean intercambiar(int dni, int codFigurita) {
 		// TODO Auto-generated method stub
-		return false;
+		if(EstaRegistrado(dni))
 	}
 
 	@Override
 	public boolean intercambiarUnaFiguritaRepetida(int dni) {
 		// TODO Auto-generated method stub
+		if(EstaRegistrado(dni)) { 
+				if (tieneRepetidas(dni)){ // preguntamos si tiene repetidas
+					for(Figurita fig : usuario.get(dni).getRepetidas().values()){ //recorremos las figuritas del usuario
+						for(int dni2 : usuario.keySet()) { //vemos si hay otro usuario con mismo tipo de album
+							if(compararAlbunes(dni,dni2)){ //comparo 
+									for(Figurita figurita : usuario.get(dni).getRepetidas().values()) {
+										if(figurita.getValorBase() == fig.getValorBase()) {
+											if(!usuario.get(dni).getAlbum().getPegadas().containsKey(figurita.getNumeroID())){
+												usuario.get(dni).getAlbum().pegadas.put(figurita.getNumeroID(), figurita);
+												usuario.get(dni2).getAlbum().pegadas.put(fig.getNumeroID(), fig);
+												return true;
+											}
+										}new RuntimeException ("No encontro con el mismo valor base");
+									}
+							}new RuntimeException ("No encontro con el mismo album");
+						}
+					}	
+				} new RuntimeException ("No tiene repetidos");
+		}
+		new RuntimeException ("No esta registrado");
 		return false;
+	}
+
+	private Figurita mismoValorBase(Figurita fig,int dni) {
+		for(Figurita figurita : usuario.get(dni).getRepetidas().values()) {
+			if(fig.getValorBase() == figurita.getValorBase()) {
+				return figurita;
+			}
+		}
+		return null;
+	}
+
+
+	private boolean compararAlbunes(int dni, int dni2) {
+		// TODO Auto-generated method stub
+		return usuario.get(dni).getAlbum().getClass().equals(usuario.get(dni2).getAlbum().getClass());
+	}
+
+
+	private boolean tieneRepetidas(int dni) {
+		return !usuario.get(dni).getRepetidas().isEmpty();
 	}
 
 	@Override
