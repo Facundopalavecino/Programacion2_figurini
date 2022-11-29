@@ -38,7 +38,7 @@ public class Fabrica {
 		ArrayList<Figurita> sobre = new ArrayList<Figurita>();
 		int j=0;
 		while(j<4) {
-			String pais = paisesParticipantes[random(0,33)];
+			String pais = paisesParticipantes[random(0,32)];
 		    int numJug =random(0,13);
 		    int ID=generarNumID(pais,numJug);
 		    int valorBase= generarValorBase(pais,numJug);
@@ -49,19 +49,33 @@ public class Fabrica {
 	}		
 
 	
-	public static int random(int min,int max) {
+
+	
+
+	public  int random(int min,int max) {
 		  return (int) (Math.random() * (max - min) + min);
 		}
 
-	List<Figurita> generarSobreTop10() {
-		/*
-		int i = 0;
+	List<FiguritaTop10> generarSobreTop10() {
+		int i =0;
+		List <FiguritaTop10> sobre = new ArrayList<FiguritaTop10>();
 		while(i<4) {
-			listadoDeMundialesTop10
-		}*/
-		throw new RuntimeException("A Implementar");
+			String sede = generarListadoDeMundiales()[random(0,10)];
+			int pos=random(0,1);
+			String balon = balonGanado(pos);
+			String paisjug = generarPaisesPorMundial().get(sede)[pos];
+			sobre.add(new FiguritaTop10(i, i, sede,paisjug,balon)) ;
+			i++;
+		}
+		return sobre;
 	}
 
+
+	private String balonGanado(int pos) {
+		if(pos==0) {
+			return "oro";
+		}return "plata";
+	}
 
 	///////////////////////////////////////////////////////
 	///////////// METODOS FACILITADOS POR LA CATEDRA //////
@@ -70,8 +84,9 @@ public class Fabrica {
 	// Dado el pais y numero de jugador de una figurita calcula
 	// cual es su valor base simbobilo.
 	public int generarNumID(String pais, int numero) {
-		return ranking.get(pais)*12+numero;   // el multiplicar x 12 asegura que el numero sea unico;
+		return (ranking.get(pais)*12)+numero;   // el multiplicar x 12 asegura que el numero sea unico;
 	}
+	
 	
 	public int generarValorBase(String pais, int numero) {
 		if(ranking.get(pais).intValue()<10){

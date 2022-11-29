@@ -34,7 +34,7 @@ public class AlbumDelMundialTest {
 		
 		sistema.comprarFiguritas(1111);
 		sistema.comprarFiguritas(4444);
-		
+
 	}
 	
 	// Registrar participante

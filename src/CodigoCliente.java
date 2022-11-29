@@ -8,7 +8,6 @@ public class CodigoCliente {
 		
 		sistema.registrarParticipante(222222, "Christian", "Tradicional");
 		sistema.registrarParticipante(333333, "Mariana", "Extendido");
-		sistema.registrarParticipante(333333, "Mariana", "Extendido");
 		sistema.registrarParticipante(111111, "José", "Web");
 		sistema.registrarParticipante(555555, "Miguel", "Web");
 		sistema.registrarParticipante(666666, "Jazzmine", "Extendido");
@@ -22,12 +21,13 @@ public class CodigoCliente {
 		sistema.comprarFiguritas(222222);
 		sistema.comprarFiguritas(333333);
 		
-		// El participante 333333 tiene un album tradicional y por eso puede 
-		// participar en un sortepo por un premio instantaneo.
+		
+		 //El participante 333333 tiene un album tradicional y por eso puede 
+		 //participar en un sortepo por un premio instantaneo.
 		System.out.println(
-				sistema.darNombre(333333) + 
+				sistema.darNombre(777777) + 
 				" recibio por sorteo instantaneo: " + 
-				sistema.aplicarSorteoInstantaneo(333333)
+				sistema.aplicarSorteoInstantaneo(777777)
 			);
 		System.out.println();
 		

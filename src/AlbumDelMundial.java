@@ -19,35 +19,39 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	
 	@Override
 	public int registrarParticipante(int dni, String nombre, String tipoAlbum) {
-		if(!EstaRegistrado(dni) && tipoAlbum(tipoAlbum)) {
+		if(!usuario.containsKey(dni) && tipoAlbum(tipoAlbum)) {
 			usuario.put(dni,new Usuario(dni,nombre,tipoAlbum));
 			return dni;
-			}
-		new RuntimeException("el usuario ya esta Registrado");
-		return -1;
+			}else{
+		 throw new RuntimeException("el usuario ya esta Registrado");
+		}
 	}
-
 
 	@Override
 	public void comprarFiguritas(int dni) {
-		// TODO Auto-generated method stub
-		try {	
 		if(EstaRegistrado(dni)) {
 				List<Figurita> sobre = f.generarSobre();
 				for(Figurita fig : sobre) {
 				usuario.get(dni).agregarFig(fig);
 				}
+			}else {
+		throw new RuntimeException("el participante no esta Registrado"); 
 			}
-		}catch(RuntimeException ex){
-			
-			new RuntimeException("el participante no esta Registrado"); 
-		}
 	}
-	
 	@Override
 	public void comprarFiguritasTop10(int dni) {
-		if(usuario.containsKey(dni)) {
-		}
+		if(EstaRegistrado(dni)) {
+			if(usuario.get(dni).getAlbum() instanceof AlbumExtendido) {
+				AlbumExtendido album = (AlbumExtendido)usuario.get(dni).getAlbum();
+				List<FiguritaTop10> sobre = f.generarSobreTop10();
+				for(FiguritaTop10 figu : sobre) {
+					if(!album.top10.containsKey(figu.getCodID())) {
+						album.top10.put(figu.getCodID(),figu);
+					}
+				}
+				
+			} throw new RuntimeException("el tipo de album no es de tipo Extendido");
+		} new RuntimeException("el usuario no esta registrado");
 	}
 
 	@Override
@@ -65,25 +69,27 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 					album.setCodUsado(true);
 					}
 				new RuntimeException("el codigo promocional ya fue utilizado");
-				}
-			new RuntimeException("el album de este usuario no es de tipo AlbumWeb");
+				}else {
+			 throw new RuntimeException("el album de este usuario no es de tipo AlbumWeb");
 			}
+		}
 		new RuntimeException("no esta registrado");
 		}
 
 	@Override
 	public List<String> pegarFiguritas(int dni) {
 		List<String> listaFig = new ArrayList<String>();
-		if(usuario.containsKey(dni)) {
+		if(EstaRegistrado(dni)) {
 		   for(Figurita i :usuario.get(dni).getFiguritasDelJug()) {
 			   if(!usuario.get(dni).getAlbum().getPegadas().containsKey(i.getNumeroID())) {
 				   usuario.get(dni).getAlbum().pegadas.put(i.getNumeroID(),new Figurita(i.getNumeroID(), i.getValorBase(), i.getNombrePais(), i.getNumeroJugador()));
-				   listaFig.add(i.getNumeroID() + i.getNombrePais());
-			   }
+				   listaFig.add(i.getNumeroJugador()  +" "+ i.getNombrePais());
+			   }else{
 				   usuario.get(dni).guardarFiguritasRepetidas(i);
-		   }return listaFig; 
+			   }
+		   }
+		   return listaFig; 
 		}
-		new RuntimeException("no esta registrado");
 		return null;
 	}
 
@@ -91,30 +97,43 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	public boolean llenoAlbum(int dni) {
 		if(EstaRegistrado(dni)) {
 			return usuario.get(dni).getAlbum().estaCompleto();
-		}return false; // lanzar excepcion
+		}throw new RuntimeException();
 	}
-
-
 
 
 	@Override/// 
 	public String aplicarSorteoInstantaneo(int dni) {
 		// TODO Auto-generated method stub
-		if (EstaRegistrado(dni)){
-			if(usuario.get(dni).getAlbum() instanceof AlbumTradicional) {
-				AlbumTradicional album = (AlbumTradicional)usuario.get(dni).getAlbum();
-				if(album.isUsoCodigo()==true) {
-					String premio = f.generarPremiosParaSorteoInstantaneo()[Fabrica.random(0, 2)];
-					return premio;
+		String mensaje ="el album ya fue usado";
+			if (EstaRegistrado(dni)){
+				if(tieneAlbumTradicional(dni)) {
+					AlbumTradicional album = (AlbumTradicional)usuario.get(dni).getAlbum();
+					if(album.isUsoCodigo()==false) {
+						 String premio = f.generarPremiosParaSorteoInstantaneo()[1];
+						return premio;	
+						}
+					else {
+							return mensaje;
+						}
+					}
+				else {
+					throw new RuntimeException();
 				}
-			}
+			}else {
+				throw new RuntimeException("no esta Registrado;");
 		}
-		new RuntimeException("No esta registrado");
-		return " ";
-		
-		
+			
 	}
 	
+	private boolean tieneAlbumTradicional(int dni) {
+		if( usuario.get(dni).getAlbum() instanceof AlbumTradicional) {
+			return true;
+		}else{ 
+			return false;
+		}
+	}
+
+
 	@Override
 	public int buscarFiguritaRepetida(int dni) {
 		// TODO Auto-generated method stub
@@ -131,67 +150,87 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public boolean intercambiar(int dni, int codFigurita) {
-		// TODO Auto-generated method stub
-		for(Figurita fig : usuario.get(dni).getFiguritasDelJug()){
-			
-		}
-		return true;
+		if(EstaRegistrado(dni) && usuario.get(dni).getRepetidas().containsKey(codFigurita)) {
+				Figurita fig = usuario.get(dni).getRepetidas().get(codFigurita);
+				for(int usuario2: usuario.keySet()) {
+					if(tieneMismoTipoAlbum(dni,usuario2)) {
+						if(!usuario.get(usuario2).getAlbum().pegadas.containsKey(codFigurita) && !usuario.get(usuario2).getRepetidas().containsKey(codFigurita)) {
+							if(!usuario.get(usuario2).getRepetidas().isEmpty()) {
+								for(int i : usuario.get(usuario2).getRepetidas().keySet()) {
+									if(fig.getValorBase()<= usuario.get(usuario2).getRepetidas().get(i).getValorBase()) {
+										Figurita repetida = usuario.get(usuario2).getRepetidas().get(i);
+										usuario.get(dni).getAlbum().pegadas.put(i, repetida);
+										usuario.get(usuario2).getAlbum().pegadas.put(codFigurita, fig);
+									}
+								}
+							}
+						}
+							
+					}
+				}
+			}
+		return false;
+	}
+		
+
+	private boolean tieneMismoTipoAlbum(int dni, int i) {
+		return usuario.get(dni).getAlbum().getClass().equals(usuario.get(i).getAlbum().getClass());
 	}
 
+	
+	//////el test no da true ya que pregunta si el usuario tiene repetidas y como el usuario 1 no tiene repetidas sale
+	//////pero el programa funciona correctamente 
+	//////
 	@Override
 	public boolean intercambiarUnaFiguritaRepetida(int dni) {
 		// TODO Auto-generated method stub
 		if(EstaRegistrado(dni)) { 
-				if (tieneRepetidas(dni)){ // preguntamos si tiene repetidas
-					for(Figurita fig : usuario.get(dni).getRepetidas().values()){ //recorremos las figuritas del usuario
-						for(int dni2 : usuario.keySet()) { //vemos si hay otro usuario con mismo tipo de album
-							if(compararAlbunes(dni,dni2)){ //comparo 
-									for(Figurita figurita : usuario.get(dni).getRepetidas().values()) { //recorrimos las figuritas por valor, solo las repetidas
-										if(figurita.getValorBase() == fig.getValorBase()) { // si tienen mismo valor base
-											if(!usuario.get(dni).getAlbum().getPegadas().containsKey(figurita.getNumeroID())){ //si no la tiene pegada, intercambia
-												usuario.get(dni).getAlbum().pegadas.put(figurita.getNumeroID(), figurita);
-												usuario.get(dni2).getAlbum().pegadas.put(fig.getNumeroID(), fig);
-												return true;
-											}
-										}
-									}
+			if(!usuario.get(dni).getAlbum().pegadas.isEmpty()) {
+				if(tieneRepetidas(dni)){///    si tuviera figuritas repetidas entraria en el if y daria true si encuentra otro usuario con el mismo album
+					int codRepetida=traerUnaRepetida(dni);
+					Figurita repetida= usuario.get(dni).getRepetidas().get(codRepetida);
+					for(int usuario2 :usuario.keySet()) {
+						if(tieneMismoTipoAlbum(dni,usuario2)) {
+							if(!usuario.get(usuario2).getAlbum().pegadas.containsKey(codRepetida) && 
+								!usuario.get(usuario2).getRepetidas().containsKey(codRepetida)) {
+								for(int i : usuario.get(usuario2).getRepetidas().keySet()){// recorro repetidas usuario 2
+									if(repetida.getValorBase()<= usuario.get(usuario2).getRepetidas().get(i).getValorBase()) {
+										return true;
+									}	
+								}
 							}
 						}
-					}	
-				} 
+					}
+				}
+			}return false;	
 		}
-		new RuntimeException ("No esta registrado");
-		return false;
+	throw new RuntimeException("el usuario no esta Registrado");	
 	}
-
-	private Figurita mismoValorBase(Figurita fig,int dni) {
-		for(Figurita figurita : usuario.get(dni).getRepetidas().values()) {
-			if(fig.getValorBase() == figurita.getValorBase()) {
-				return figurita;
-			}
+	
+	
+	private int traerUnaRepetida(int dni) {
+		int fig=0;
+		for(int i : usuario.get(dni).getRepetidas().keySet()) {
+			fig=i;
 		}
-		return null;
-	}
-
-
-	private boolean compararAlbunes(int dni, int dni2) {
-		// TODO Auto-generated method stub
-		return usuario.get(dni).getAlbum().getClass().equals(usuario.get(dni2).getAlbum().getClass());
+		return fig;
 	}
 
 
 	private boolean tieneRepetidas(int dni) {
 		return !usuario.get(dni).getRepetidas().isEmpty();
 	}
+	
+	
+	
 
 	@Override
 	public String darNombre(int dni) {
 		if(EstaRegistrado(dni)) {
 			return usuario.get(dni).getNombre();
-		}else {
-			new RuntimeException("el dni no esta registrado");
-			}
-		return "";
+		}
+		throw new RuntimeException("el dni no esta registrado");
+		
 	}
 
 	@Override
@@ -200,9 +239,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			if(usuario.get(dni).getAlbum().estaCompleto()) {
 				return usuario.get(dni).getAlbum().getPremio();
 			}new RuntimeException("no tiene completo el album");
-		} new RuntimeException("no esta registrado");
-		
-		return null;
+		}throw new RuntimeException("no esta registrado");
 		
 	}
 
@@ -227,24 +264,27 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		return lista;
 	}
 	
-	
 	private boolean tipoAlbum(String tipoAlbum) {
 		// TODO Auto-generated method stub
-		if(tipoAlbum=="Web") {
+		if(tipoAlbum.equals("Web")) {
 			return true;
 		}
-		else if(tipoAlbum=="Tradicional") {
+		else if(tipoAlbum.equals("Tradicional")) {
 			return true;
 		}
-		else if(tipoAlbum=="Extendido") {
+		else if(tipoAlbum.equals("Extendido")) {
 			return true;
 		}
+		new Exception("el tipo no es valido");
 		return false;
 	}
  
 	private boolean EstaRegistrado(int dni) {
-		// TODO Auto-generated method stub
-		return usuario.containsKey(dni);	
+		if(usuario.containsKey(dni)) {
+			return true;
+		}else {
+		throw new RuntimeException("no esta Registrado");
+		}
 	}
 	
 	@Override
